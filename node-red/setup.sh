@@ -54,27 +54,18 @@ EOF
 msg "Installing Docker..."
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 
-# Install Portainer
-msg "Installing Portainer..."
-docker volume create portainer_data >/dev/null
-docker run -d \
-  -p 8000:8000 \
-  -p 9000:9000 \
-  --label com.centurylinklabs.watchtower.enable=true \
-  --name=portainer \
-  --restart=always \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -v portainer_data:/data \
-  portainer/portainer &>/dev/null
+# # Install NODE-RED
+msg "Installing Node-Red..."
 
-# Install Watchtower
-msg "Installing Watchtower..."
-docker run -d \
-  --name watchtower \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  containrrr/watchtower \
-  --cleanup \
-  --label-enable &>/dev/null
+ docker volume create nodered_data >/dev/null
+
+docker run -it \
+           -p 1880:1880 \
+           -v nodered_data:/data \
+           --name mynodered \
+           -v /var/run/docker.sock:/var/run/docker.sock \
+           -v nodered_data:/data \
+           nodered/nodered &>/dev/null
 
 # Customize container
 msg "Customizing container..."
