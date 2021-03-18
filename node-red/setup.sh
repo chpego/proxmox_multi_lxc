@@ -62,8 +62,7 @@ docker volume create nodered_data >/dev/null
 docker run -it \
            -p 1880:1880 \
            -v nodered_data:/data \
-           --name nodered \
-           -v /var/run/docker.sock:/var/run/docker.sock \
+           --name nodered \          
            -v nodered_data:/data \
            nodered/node-red &>/dev/null
 
