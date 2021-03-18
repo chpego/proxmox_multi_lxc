@@ -65,7 +65,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download DOCKER setup script
-wget -qL https://github.com/andryx86/proxmox_multi_lxc/blob/master/setupDocker.sh
+wget -qL https://github.com/andryx86/proxmox_multi_lxc/raw/master/setupDocker.sh
 
 # # Install NODE-RED
 msg "Installing Node-Red..."
