@@ -65,7 +65,43 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download DOCKER setup script
-wget -qL https://github.com/andryx86/proxmox_multi_lxc/raw/master/setupDocker.sh
+#wget -qL https://github.com/andryx86/proxmox_multi_lxc/raw/master/setupDocker.sh
+
+#####START DOCKER#####
+
+# Prepare container OS
+msg "Setting up container OS..."
+sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
+locale-gen >/dev/null
+apt-get -y purge openssh-{client,server} >/dev/null
+apt-get autoremove >/dev/null
+
+# Update container OS
+msg "Updating container OS..."
+apt-get update >/dev/null
+apt-get -qqy upgrade &>/dev/null
+
+# Install prerequisites
+msg "Installing prerequisites..."
+apt-get -qqy install \
+    curl &>/dev/null
+
+# Customize Docker configuration
+msg "Customizing Docker..."
+DOCKER_CONFIG_PATH='/etc/docker/daemon.json'
+mkdir -p $(dirname $DOCKER_CONFIG_PATH)
+cat >$DOCKER_CONFIG_PATH <<'EOF'
+{
+  "log-driver": "journald"
+}
+EOF
+
+# Install Docker
+msg "Installing Docker..."
+sh <(curl -sSL https://get.docker.com) &>/dev/null
+
+#####END DOCKER#####
+
 
 # # Install NODE-RED
 msg "Installing Node-Red..."
