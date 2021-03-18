@@ -73,7 +73,7 @@ pushd $TEMP_DIR >/dev/null
 msg "Setting up container OS..."
 sed -i "/$LANG/ s/\(^# \)//" /etc/locale.gen
 locale-gen >/dev/null
-apt-get -y purge openssh-{client,server} >/dev/null
+###removedondebug## apt-get -y purge openssh-{client,server} >/dev/null
 apt-get autoremove >/dev/null
 
 # Update container OS
