@@ -54,18 +54,18 @@ EOF
 msg "Installing Docker..."
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 
-# # Install NODE-RED
+# # Installing NODE-RED
 msg "Installing Node-Red..."
 
- docker volume create nodered_data >/dev/null
+docker volume create nodered_data >/dev/null
 
 docker run -it \
            -p 1880:1880 \
            -v nodered_data:/data \
-           --name mynodered \
+           --name nodered \
            -v /var/run/docker.sock:/var/run/docker.sock \
            -v nodered_data:/data \
-           nodered/nodered &>/dev/null
+           nodered/node-red &>/dev/null
 
 # Customize container
 msg "Customizing container..."
