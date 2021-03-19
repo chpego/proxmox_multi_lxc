@@ -59,12 +59,13 @@ msg "Installing Node-Red..."
 
 docker volume create nodered_data >/dev/null
 
-# docker run -it \
-#            -p 1880:1880 \
-#            -v nodered_data:/data \
-#            --name nodered \
-#            -v nodered_data:/data \
-#            nodered/node-red &>/dev/null
+docker run -it \
+           -p 1880:1880 \
+           -v nodered_data:/data \
+           --name nodered \
+           -v nodered_data:/data \
+           --restart=always \
+           nodered/node-red &>/dev/null
 
 # Customize container
 msg "Customizing container..."
