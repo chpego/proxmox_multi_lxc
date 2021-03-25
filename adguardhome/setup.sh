@@ -51,22 +51,22 @@ cat >$DOCKER_CONFIG_PATH <<'EOF'
 EOF
 
 # Install Docker
-#msg "Installing Docker..."
-#sh <(curl -sSL https://get.docker.com) &>/dev/null
-#
-## Installing AD GUARD HOMME
-#msg "Installing AdGuardHome..."
-#
-#docker volume create adguardhome_workdir >/dev/null
-#docker volume create adguardhome_conf >/dev/null
-#
-#docker run --name adguardhome \
-#          -v adguardhome_workdir:/opt/adguardhome/work \
-#          -v adguardhome_conf:/opt/adguardhome/conf \
-#          -p 53:53/tcp -p 53:53/udp \
-#          -p 80:80/tcp -p 3000:3000/tcp \
-#          --restart=unless-stopped \
-#          -d adguard/adguardhome &>/dev/null
+msg "Installing Docker..."
+sh <(curl -sSL https://get.docker.com) &>/dev/null
+
+# Installing AD GUARD HOMME
+msg "Installing AdGuardHome..."
+
+docker volume create adguardhome_workdir >/dev/null
+docker volume create adguardhome_conf >/dev/null
+
+docker run --name adguardhome \
+          -v adguardhome_workdir:/opt/adguardhome/work \
+          -v adguardhome_conf:/opt/adguardhome/conf \
+          -p 53:53/tcp -p 53:53/udp \
+          -p 80:80/tcp -p 3000:3000/tcp \
+          --restart=unless-stopped \
+          -d adguard/adguardhome &>/dev/null
 
 # Customize container
 msg "Customizing container..."
