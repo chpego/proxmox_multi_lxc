@@ -54,27 +54,19 @@ EOF
 msg "Installing Docker..."
 sh <(curl -sSL https://get.docker.com) &>/dev/null
 
-# Install Portainer
-msg "Installing Portainer..."
-docker volume create portainer_data >/dev/null
-docker run -d \
-  -p 8000:8000 \
-  -p 9000:9000 \
-  --label com.centurylinklabs.watchtower.enable=true \
-  --name=portainer \
-  --restart=unless-stopped \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  -v portainer_data:/data \
-  portainer/portainer &>/dev/null
+# # Installing AD GUARD HOMME
+msg "Installing AdGuardHome..."
 
-# Install Watchtower
-msg "Installing Watchtower..."
-docker run -d \
-  --name watchtower \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  containrrr/watchtower \
-  --cleanup \
-  --label-enable &>/dev/null
+docker volume create adguardhome_workdir >/dev/null
+docker volume create adguardhome_conf >/dev/null
+
+docker run --name adguardhome \
+          -v adguardhome_workdir:/opt/adguardhome/work \
+          -v adguardhome_conf:/opt/adguardhome/conf \
+          -p 53:53/tcp -p 53:53/udp \
+          -p 80:80/tcp -p 3000:3000/tcp \
+          --restart=unless-stopped \
+          -d adguard/adguardhome &>/dev/null
 
 # Customize container
 msg "Customizing container..."

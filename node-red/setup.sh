@@ -64,7 +64,7 @@ docker run -it \
            -v nodered_data:/data \
            --name nodered \
            -v nodered_data:/data \
-           --restart=always \
+           --restart=unless-stopped \
            nodered/node-red &>/dev/null
 
 # Customize container

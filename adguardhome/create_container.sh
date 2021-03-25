@@ -65,7 +65,7 @@ TEMP_DIR=$(mktemp -d)
 pushd $TEMP_DIR >/dev/null
 
 # Download setup script
-wget -qL https://github.com/andryx86/proxmox_multi_lxc/raw/master/portainer/setup.sh
+wget -qL https://github.com/andryx86/proxmox_multi_lxc/raw/master/adguardhome/setup.sh
 
 # Detect modules and automatically load at boot
 load_module aufs
@@ -138,7 +138,10 @@ else
   mkfs.ext4 $(pvesm path $ROOTFS) &>/dev/null
 fi
 ARCH=$(dpkg --print-architecture)
-HOSTNAME=portainer
+
+#-----replace HOSTNAME here----
+HOSTNAME=AdGuardHome
+
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
 pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
   -hostname $HOSTNAME -net0 name=eth0,bridge=vmbr0,ip=dhcp -onboot 1 \
@@ -152,9 +155,9 @@ lxc.cap.drop:
 EOF
 
 # Set container description
-pct set $CTID -description "Access Portainer interface using the following URL.
+pct set $CTID -description "Access web interface using the following URL.
 
-http://<IP_ADDRESS>:9000"
+http://<IP_ADDRESS>:3000"
 
 # Set container timezone to match host
 MOUNT=$(pct mount $CTID | cut -d"'" -f 2)
@@ -172,9 +175,9 @@ IP=$(pct exec $CTID ip a s dev eth0 | sed -n '/inet / s/\// /p' | awk '{print $2
 info "Successfully created Portainer LXC to $CTID."
 msg "
 
-Portainer is reachable by going to the following URLs.
+WebInterface is reachable by going to the following URLs.
 
-      http://${IP}:9000
-      http://${HOSTNAME}.local:9000
+      http://${IP}:3000
+      http://${HOSTNAME}.local:3000
 
 "
