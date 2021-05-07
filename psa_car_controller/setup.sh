@@ -59,11 +59,11 @@ msg "Installing psa_car_controller ..."
 
 docker volume create psa_car_controller_conf >/dev/null
 
-docker run --name psa_car_controller1 \
+docker run -ti --name psa_car_controller1 \
           -v psa_car_controller_conf:/config \
           -p 5000:5000 \
           --restart=unless-stopped \
-          -d flobz/psa_car_controller &>/dev/null
+          -d psa_car_controller &>/dev/null
 
 # Customize container
 msg "Customizing container..."
