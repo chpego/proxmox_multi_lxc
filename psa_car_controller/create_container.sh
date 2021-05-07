@@ -140,7 +140,7 @@ fi
 ARCH=$(dpkg --print-architecture)
 
 #-----replace HOSTNAME here----
-HOSTNAME=psa_car_controller
+HOSTNAME=psa-car-controller
 
 TEMPLATE_STRING="local:vztmpl/${TEMPLATE}"
 pct create $CTID $TEMPLATE_STRING -arch $ARCH -features nesting=1 \
