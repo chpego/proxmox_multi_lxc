@@ -63,7 +63,7 @@ docker run -ti --name psa_car_controller1 \
           -v psa_car_controller_conf:/config \
           -p 5000:5000 \
           --restart=unless-stopped \
-          -d psa_car_controller &>/dev/null
+          -d flobz/psa_car_controller &>/dev/null
 
 # Customize container
 msg "Customizing container..."
